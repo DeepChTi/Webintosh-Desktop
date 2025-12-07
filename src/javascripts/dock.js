@@ -10,6 +10,9 @@ let noAnimation = [
     "启动台",
     "访达"
 ]
+let noMenuChanging = [
+    "启动台"
+]
 
 export const dock = document.getElementById("dock");
 
@@ -39,11 +42,13 @@ function init() {
                         img.classList.remove("opening");
                         light.classList.add("on");
                         create("./assets/apps/"+app+".html", light);
-                        updateMenu(app);
+                        if (!noMenuChanging.includes(img.alt))
+                            updateMenu(app);
                     }, 2980);
                 } else {
                     create("./assets/apps/"+app+".html");
-                    updateMenu(app);
+                    if (!noMenuChanging.includes(img.alt))
+                        updateMenu(app);
                 }
             });
         } else {
@@ -58,7 +63,7 @@ function DockAnimation(){
     const baseWidth = 50;
     const mouseRange = 200;
     const maxScale = 1.8;
-    const lerpSpeed = 0.2;
+    const lerpSpeed = 0.5;
     const images = dock.querySelectorAll(".container img");
 
     images.forEach(img => {
@@ -98,7 +103,7 @@ function DockAnimation(){
             }
         });
         requestAnimationFrame(animation);
-    }//66
+    }
     animation();
 }
 
