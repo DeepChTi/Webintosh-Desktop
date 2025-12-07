@@ -133,7 +133,7 @@ function updateTime() {
     day = day.toString();
     month = month.toString();
     timeControl.innerHTML = `${month} 月 ${day} 日 ${weekDay}`;
-    dateControl.innerHTML = `${hours}:${minutes}`;
+    dateControl.innerHTML = `${hours}：${minutes}`;
 }
 
 updateMenu("访达");

@@ -2,7 +2,7 @@ import { createAlert } from "./ui/alert.js";
 
 let fd = document.querySelector(".finderbar")
 
-export function create(file, light=null) {
+export function create(file, light = null) {
     fetch(file)
         .then(response => {
             if (response.status !== 200) {
@@ -31,7 +31,7 @@ export function create(file, light=null) {
     }, 150);
 }
 
-export function resetWindowListeners(light=null) {
+export function resetWindowListeners(light = null) {
     let windows = document.querySelectorAll(".window");
     windows.forEach(win => {
         let closeBtn = win.querySelector(".wintools .red");
@@ -81,11 +81,7 @@ function addWindowDrag(windowElement) {
         let newX = e.clientX - offsetX;
         let newY = e.clientY - offsetY;
 
-        const maxX = window.innerWidth - windowElement.offsetWidth;
-        const maxY = window.innerHeight - windowElement.offsetHeight;
-
-        newX = Math.max(0, Math.min(newX, maxX));
-        newY = Math.max(document.querySelector(".finderbar").offsetHeight, Math.min(newY, maxY));
+        newY = Math.max(document.querySelector(".finderbar").offsetHeight, newY);
 
         windowElement.style.left = newX + 'px';
         windowElement.style.top = newY + 'px';

@@ -46,9 +46,9 @@
 
 .dock {
   width: auto;
-  height: auto;
+  height: 56.5px;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   padding: 5px;
   padding-bottom: 2.5px;
@@ -58,7 +58,7 @@
        user-select: none;
   -webkit-user-select: none;
   box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.3333333333), inset 0 0 2px rgba(26, 26, 26, 0.7333333333);
-  z-index: 1024;
+  z-index: 2049;
   -webkit-backdrop-filter: blur(50px) saturate(1.8);
           backdrop-filter: blur(50px) saturate(1.8);
   background: rgba(246, 246, 246, 0.46);
@@ -72,9 +72,15 @@
 .dock .container img {
   width: 50px;
   height: 50px;
+  transition: filter 0.05s;
+  will-change: width;
+  transform-origin: bottom;
 }
 .dock .container img.opening {
   animation: parabola 1s infinite;
+}
+.dock .container img:active {
+  filter: brightness(0.5);
 }
 .dock .container hr {
   border: none;

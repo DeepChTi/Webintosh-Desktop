@@ -47,9 +47,9 @@
 
 .dock {
     width: auto;
-    height: auto;
+    height: 56.5px;
     display: inline-flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     padding: 5px;
     padding-bottom: 2.5px;
@@ -59,7 +59,7 @@
     -webkit-user-select: none;
     box-shadow: 0 -2px 20px #0005, inset 0 0 2px #1a1a1abb;
     // border: solid 2px rgba(105, 105, 105, 0.36);
-    z-index: 1024;
+    z-index: 2049;
     backdrop-filter: blur(50px) saturate(1.8);
     background: rgba(246, 246, 246, 0.46);
 
@@ -72,9 +72,19 @@
         img {
             width: 50px;
             height: 50px;
-
+            transition: filter 0.05s;
+            will-change: width;
+            transform-origin: bottom;
+            // &.smooth-reset {
+            //     // transition: width 0.2s ease, height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            //     transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            // }
             &.opening {
                 animation: parabola 1s infinite;
+            }
+
+            &:active {
+                filter: brightness(0.5);
             }
         }
 

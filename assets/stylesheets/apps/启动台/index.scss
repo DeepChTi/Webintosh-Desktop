@@ -1,4 +1,83 @@
+@keyframes animation {
+    0% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
 .launchpad {
-    width: 100%;
-    height: 100%;
+    width: calc(100%);
+    height: calc(100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 2048;
+
+    .containers {
+        width: calc(100% - 180px);
+        height: calc(100% - 130px);
+        display: grid;
+        grid-template-columns: repeat(7, auto);
+        grid-template-rows: repeat(5, auto);
+        color: white;
+        padding: 50px 90px;
+        padding-bottom: 80px;
+        opacity: 0;
+        transform: scale(1.2);
+        animation: animation 0.4s ease-in-out forwards;
+
+        .container {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 72px;
+                height: 72px;
+            }
+
+            p {
+                font-size: 12px;
+                text-shadow: 1px 1px 5px #0003;
+            }
+        }
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .bg {
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url(../../../images/Wallpaper.png);
+        background-position: center;
+        background-size: cover;
+        filter: blur(20px);
+        transform: scale(1.2);
+        opacity: 0;
+        animation: fade 0.35s ease forwards;
+    }
 }

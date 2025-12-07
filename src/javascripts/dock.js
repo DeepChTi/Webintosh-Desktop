@@ -6,6 +6,10 @@ const defaultApps = [
     "日历", "通讯录", "提醒事项", "备忘录", "音乐", "视频", "播客", "News", "系统设置",
     "hr", "Download_Folder", "废纸篓"
 ];
+let noAnimation = [
+    "启动台",
+    "访达"
+]
 
 export const dock = document.getElementById("dock");
 
@@ -16,6 +20,7 @@ function init() {
         if (app != "hr") {
             let img = document.createElement("img");
             img.src = `./assets/icons/${app}.svg`;
+            img.alt = app; 
             if (app.endsWith("Folder")) {
                 img.src = "./assets/icons/folder.svg";
             }
@@ -27,18 +32,19 @@ function init() {
             }
             container.appendChild(light);
 
-            img.addEventListener("mousedown", () => {
-                img.style.filter = "brightness(0.5)";
-            });
             img.addEventListener("mouseup", () => {
-                img.style.filter = "brightness(1)";
-                img.classList.add("opening");
-                setTimeout(() => {
-                    img.classList.remove("opening");
-                    light.classList.add("on");
-                    create("./assets/apps/"+app+".html", light);
+                if (!noAnimation.includes(img.alt)) {
+                    img.classList.add("opening");
+                    setTimeout(() => {
+                        img.classList.remove("opening");
+                        light.classList.add("on");
+                        create("./assets/apps/"+app+".html", light);
+                        updateMenu(app);
+                    }, 2980);
+                } else {
+                    create("./assets/apps/"+app+".html");
                     updateMenu(app);
-                }, 2980);
+                }
             });
         } else {
             let hr = document.createElement("hr");
@@ -47,4 +53,54 @@ function init() {
         dock.appendChild(container);
     })
 }
+
+function DockAnimation(){
+    const baseWidth = 50;
+    const mouseRange = 200;
+    const maxScale = 1.8;
+    const lerpSpeed = 0.2;
+    const images = dock.querySelectorAll(".container img");
+
+    images.forEach(img => {
+        img.currentWidth = baseWidth;
+        img.targetWidth = baseWidth;
+    });
+
+    dock.addEventListener("mousemove", (e) => {
+        const mouseX = e.clientX;
+        images.forEach((img) => {
+            const rect = img.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const distance = Math.abs(mouseX - centerX);
+            if (distance < mouseRange) {
+                const distanceRatio = distance / mouseRange;
+                const scale = 1 + (maxScale - 1) * Math.sin((1 - distanceRatio) * Math.PI / 2);
+                img.targetWidth = baseWidth * scale;
+            } else {
+                img.targetWidth = baseWidth;
+            }
+        });
+    });
+
+    dock.addEventListener("mouseleave", () => {
+        images.forEach((img) => {
+            img.targetWidth = baseWidth;
+        });
+    });
+
+    function animation() {
+        images.forEach(img => {
+            const diff = img.targetWidth - img.currentWidth;
+            if(Math.abs(diff) > 0.1) {
+                img.currentWidth += diff * lerpSpeed;
+                img.style.width = `${img.currentWidth}px`;
+                img.style.height = `${img.currentWidth}px`;
+            }
+        });
+        requestAnimationFrame(animation);
+    }//66
+    animation();
+}
+
 init();
+DockAnimation();
